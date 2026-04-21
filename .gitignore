@@ -1,0 +1,22 @@
+# Xcode
+*.xcuserstate
+*.xcuserdatad
+xcuserdata/
+DerivedData/
+*.moved-aside
+*.pbxuser
+*.perspectivev3
+
+# ビルド成果物
+build/
+*.o
+*.d
+
+# macOS
+.DS_Store
+
+# Claude Code
+.claude/settings.local.json
+
+# Crashlytics
+crashlytics-build.properties
