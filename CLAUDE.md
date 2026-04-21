@@ -105,3 +105,8 @@ Note the testing framework split: unit tests use the modern Swift `Testing` fram
 2. このCLAUDE.mdのコーディング規約に従う
 3. 再利用できるものはShared/Componentsに切り出す
 4. 実装完了後に変更したファイル一覧を報告する
+
+## 関連ドキュメント（実装前に必ず読むこと）
+- セキュリティルール：/docs/security.md
+- 役割分担：/docs/role.md
+- 機能仕様：/docs/specs/ 配下の該当ファイル

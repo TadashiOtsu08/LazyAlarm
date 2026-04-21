@@ -20,3 +20,10 @@ build/
 
 # Crashlytics
 crashlytics-build.properties
+
+# セキュリティ関連（ローカルのみ・pushしない）
+docs/security.md
+.env
+.env.local
+GoogleService-Info.plist
+*.xcconfig
