@@ -14,7 +14,6 @@ struct AlarmSetupView: View {
                 addButtonRow
                 Spacer() // キャラクター表示エリア（将来実装）
                 alarmSection
-                tabBar
             }
         }
     }
@@ -66,33 +65,6 @@ struct AlarmSetupView: View {
                 .padding(.bottom, AlarmLayout.warningBottomPadding)
         }
         .padding(.horizontal, AlarmLayout.horizontalMargin)
-    }
-
-    /// Home・Alertの2タブを持つボトムタブバー（Liquid Glassピル型）
-    private var tabBar: some View {
-        HStack(spacing: 0) {
-            tabItem(title: "Home", icon: SFSymbols.alarm, isSelected: true)
-            tabItem(title: "Alert", icon: SFSymbols.bell, isSelected: false)
-        }
-        .background(.regularMaterial, in: Capsule())
-        .shadow(color: .black.opacity(0.12), radius: 20, y: 8)
-        .padding(.horizontal, 25)
-        .padding(.top, 16)
-        .padding(.bottom, 25)
-    }
-
-    /// タブバーの各アイテムを生成する
-    private func tabItem(title: String, icon: String, isSelected: Bool) -> some View {
-        VStack(spacing: 1) {
-            Image(systemName: icon)
-                .font(.system(size: 18, weight: .semibold))
-            Text(title)
-                .font(.system(size: 10, weight: .semibold))
-                .tracking(-0.1)
-        }
-        .foregroundStyle(isSelected ? Color.lazyTabSelected : Color(.label))
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 7)
     }
 }
 
