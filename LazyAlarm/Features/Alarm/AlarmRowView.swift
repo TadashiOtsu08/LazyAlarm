@@ -25,7 +25,7 @@ struct AlarmRowView: View {
             // ON/OFFトグル（ピンクアクセントカラーを適用）
             Toggle("", isOn: $alarm.isEnabled)
                 .labelsHidden()
-                .tint(Color.accentPink)
+                .tint(Color.lazyPink)
         }
         .padding(.horizontal, AlarmLayout.rowHorizontalPadding)
         .padding(.vertical, AlarmLayout.rowVerticalPadding)
@@ -51,5 +51,5 @@ struct AlarmRowView: View {
         label: "アラーム",
         isEnabled: true
     )))
-    .background(Color.backgroundPrimary)
+    .background(Color.lazyBackground)
 }

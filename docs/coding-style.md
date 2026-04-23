@@ -46,27 +46,36 @@ enum CharacterLayout {
 ## カラー管理
 
 ### ルール
-- すべてのカラーはAssets.xcassetsに登録する
-- コードからはShared/Theme/Color+Theme.swiftのextensionで呼び出す
 - カラーコードを直接コードに書かない
+- 新しいカラーはColor+Theme.swiftとAssets.xcassetsにセットで追加する
+- Claude Codeはコードのみ追加しAssetsへの登録は手動で行う
 
-### Assets.xcassetsに登録するカラー一覧
-- BackgroundPrimary：#010133（ダークネイビー）
-- AccentPink：#e8069d（ピンク）
-- TabSelected：#0088ff（タブ選択色）
+### 追加手順
+1. Shared/Theme/Color+Theme.swiftに定義を追加する
+   - 変数名：lazy〇〇の形式（例：lazyBackground）
+   - Assets名："〇〇"の形式（例："BackgroundPrimary"）
+2. Tadashiさんが手動でAssets.xcassetsにColor Setを追加する
+   - Color Set名はコード内の文字列と完全一致させる
 
-### Color+Theme.swiftの書き方
+### 現在登録済みのカラー一覧
+| 変数名 | Assets名 | カラーコード | 用途 |
+|--------|---------|------------|------|
+| lazyBackground | BackgroundPrimary | #010133 | メイン背景色 |
+| lazyPink | AccentPink | #e8069d | アクセント・トグル |
+| lazyTabSelected | TabSelected | #0088ff | タブ選択色 |
+
+### コードでの呼び出し方
 ```swift
-// Shared/Theme/Color+Theme.swift
-extension Color {
-    /// メイン背景色（ダークネイビー #010133）
-    static let backgroundPrimary = Color("BackgroundPrimary")
-    /// アクセントカラー（ピンク #e8069d）
-    static let accentPink = Color("AccentPink")
-    /// タブ選択色（#0088ff）
-    static let tabSelected = Color("TabSelected")
-}
+Color.lazyBackground
+Color.lazyPink
+Color.lazyTabSelected
 ```
+
+### Assets.xcassetsへの手動登録手順
+1. Assets.xcassetsを開く
+2. 左下の「+」→「Color Set」を選択
+3. 名前をコード内の文字列と完全一致で入力
+4. 色ボックスをクリックしHexコードを入力
 
 ---
 

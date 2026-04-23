@@ -8,7 +8,7 @@ struct HistoryView: View {
         Text("HistoryView")
             .foregroundStyle(.white)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.backgroundPrimary.ignoresSafeArea())
+            .background(Color.lazyBackground.ignoresSafeArea())
     }
 }
 

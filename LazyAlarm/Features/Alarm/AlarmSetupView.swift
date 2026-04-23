@@ -8,7 +8,7 @@ struct AlarmSetupView: View {
 
     var body: some View {
         ZStack {
-            Color.backgroundPrimary.ignoresSafeArea()
+            Color.lazyBackground.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 addButtonRow
@@ -90,7 +90,7 @@ struct AlarmSetupView: View {
                 .font(.system(size: 10, weight: .semibold))
                 .tracking(-0.1)
         }
-        .foregroundStyle(isSelected ? Color.tabSelected : Color(.label))
+        .foregroundStyle(isSelected ? Color.lazyTabSelected : Color(.label))
         .frame(maxWidth: .infinity)
         .padding(.vertical, 7)
     }
