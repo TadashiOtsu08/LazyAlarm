@@ -1,0 +1,58 @@
+import SwiftUI
+
+/// アラーム一覧の1行分を表示するView
+struct AlarmRowView: View {
+
+    /// 表示・編集するアラームのバインディング
+    @Binding var alarm: AlarmItem
+
+    /// Figmaデザインのピンクアクセントカラー（#e8069d）
+    private let accentColor = Color(red: 232 / 255, green: 6 / 255, blue: 157 / 255)
+
+    var body: some View {
+        HStack(spacing: 0) {
+            // 時刻とラベルを縦並びで表示
+            VStack(alignment: .leading, spacing: 2) {
+                Text(formattedTime)
+                    .font(.system(size: 17, weight: .regular))
+                    .tracking(-0.43)
+                    .foregroundStyle(Color(white: 0.6))
+                Text(alarm.label)
+                    .font(.system(size: 15, weight: .regular))
+                    .tracking(-0.23)
+                    .foregroundStyle(Color(white: 0.6))
+            }
+
+            Spacer()
+
+            // ON/OFFトグル（Figmaのピンク色を適用）
+            Toggle("", isOn: $alarm.isEnabled)
+                .labelsHidden()
+                .tint(accentColor)
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        // Figmaの区切り線（上端に薄い白線）
+        .overlay(alignment: .top) {
+            Rectangle()
+                .fill(Color(white: 0.9, opacity: 0.3))
+                .frame(height: 0.5)
+        }
+    }
+
+    /// Dateを "6:30" 形式の文字列に変換する
+    private var formattedTime: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "H:mm"
+        return formatter.string(from: alarm.time)
+    }
+}
+
+#Preview {
+    AlarmRowView(alarm: .constant(AlarmItem(
+        time: Calendar.current.date(bySettingHour: 6, minute: 30, second: 0, of: Date()) ?? Date(),
+        label: "アラーム",
+        isEnabled: true
+    )))
+    .background(Color(red: 1 / 255, green: 1 / 255, blue: 51 / 255))
+}

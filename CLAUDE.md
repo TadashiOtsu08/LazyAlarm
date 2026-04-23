@@ -88,6 +88,26 @@ Note the testing framework split: unit tests use the modern Swift `Testing` fram
 - ファイル名はUpperCamelCase（例：AlarmSetupView.swift）
 - テストファイルは対象ファイル名＋Tests（例：AlarmSetupViewTests.swift）
 
+### 定数・マジックナンバー管理
+- 数値・文字列を直接コードに書かない
+- レイアウト定数は各機能のConstants/〇〇Layout.swiftに定義する
+  例）Features/Alarm/Constants/AlarmLayout.swift
+- 詳細ルール：/docs/coding-style.md を参照
+
+### カラー管理
+- カラーコードを直接コードに書かない
+- Assets.xcassetsに登録しShared/Theme/Color+Theme.swiftから呼び出す
+- 例）Color.backgroundPrimary
+
+### アイコン名管理
+- SF Symbolsのアイコン名を文字列で直接書かない
+- Shared/Theme/SFSymbols.swiftから呼び出す
+- 例）SFSymbols.alarm
+
+### 共通コンポーネント
+- 2画面以上で使うViewはShared/Componentsに切り出す
+- 詳細ルール：/docs/coding-style.md を参照
+
 ## 命名規則
 - View:       〇〇View        例）AlarmActiveView
 - ViewModel:  〇〇ViewModel   例）CharacterViewModel
