@@ -6,15 +6,9 @@ struct AlarmSetupView: View {
     /// アラーム一覧の状態を管理するViewModel
     @State private var viewModel = AlarmSetupViewModel()
 
-    /// Figmaのダークネイビー背景色（#010133）
-    private let backgroundColor = Color(red: 1 / 255, green: 1 / 255, blue: 51 / 255)
-
-    /// タブバーの選択中カラー（#0088ff）
-    private let tabActiveColor = Color(red: 0, green: 136 / 255, blue: 1.0)
-
     var body: some View {
         ZStack {
-            backgroundColor.ignoresSafeArea()
+            Color.backgroundPrimary.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 addButtonRow
@@ -30,15 +24,18 @@ struct AlarmSetupView: View {
         HStack {
             Spacer()
             Button(action: viewModel.addAlarm) {
-                Image(systemName: "plus")
+                Image(systemName: SFSymbols.plus)
                     .font(.system(size: 19, weight: .semibold))
                     .foregroundStyle(Color(.label))
-                    .frame(width: 48, height: 48)
+                    .frame(
+                        width: AlarmLayout.addButtonSize,
+                        height: AlarmLayout.addButtonSize
+                    )
                     .background(.regularMaterial, in: Circle())
             }
         }
-        .padding(.trailing, 16)
-        .padding(.top, 8)
+        .padding(.trailing, AlarmLayout.buttonTrailingPadding)
+        .padding(.top, AlarmLayout.buttonTopPadding)
     }
 
     /// アラームリストとサイレントモード注意書きのセクション
@@ -48,8 +45,8 @@ struct AlarmSetupView: View {
             Text("アラーム")
                 .font(.system(size: 13, weight: .regular))
                 .foregroundStyle(.white)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
+                .padding(.horizontal, AlarmLayout.sectionLabelHorizontalPadding)
+                .padding(.vertical, AlarmLayout.sectionLabelVerticalPadding)
 
             // アラーム行のリスト
             VStack(spacing: 0) {
@@ -57,25 +54,25 @@ struct AlarmSetupView: View {
                     AlarmRowView(alarm: $alarm)
                 }
             }
-            .background(Color.white.opacity(0.05))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .background(Color.white.opacity(AlarmLayout.listBackgroundOpacity))
+            .clipShape(RoundedRectangle(cornerRadius: AlarmLayout.listCornerRadius))
 
             // サイレントモード注意書き（仕様書の要件）
             Text("アラームを確実に鳴らすため、就寝前にサイレントモードを解除してご使用ください。")
-                .font(.system(size: 12))
-                .foregroundStyle(.white.opacity(0.4))
-                .padding(.horizontal, 16)
-                .padding(.top, 8)
-                .padding(.bottom, 16)
+                .font(.system(size: AlarmLayout.warningFontSize))
+                .foregroundStyle(.white.opacity(AlarmLayout.warningOpacity))
+                .padding(.horizontal, AlarmLayout.sectionLabelHorizontalPadding)
+                .padding(.top, AlarmLayout.sectionLabelVerticalPadding)
+                .padding(.bottom, AlarmLayout.warningBottomPadding)
         }
-        .padding(.horizontal, 51)
+        .padding(.horizontal, AlarmLayout.horizontalMargin)
     }
 
     /// Home・Alertの2タブを持つボトムタブバー（Liquid Glassピル型）
     private var tabBar: some View {
         HStack(spacing: 0) {
-            tabItem(title: "Home", icon: "alarm.fill", isSelected: true)
-            tabItem(title: "Alert", icon: "bell.fill", isSelected: false)
+            tabItem(title: "Home", icon: SFSymbols.alarm, isSelected: true)
+            tabItem(title: "Alert", icon: SFSymbols.bell, isSelected: false)
         }
         .background(.regularMaterial, in: Capsule())
         .shadow(color: .black.opacity(0.12), radius: 20, y: 8)
@@ -93,7 +90,7 @@ struct AlarmSetupView: View {
                 .font(.system(size: 10, weight: .semibold))
                 .tracking(-0.1)
         }
-        .foregroundStyle(isSelected ? tabActiveColor : Color(.label))
+        .foregroundStyle(isSelected ? Color.tabSelected : Color(.label))
         .frame(maxWidth: .infinity)
         .padding(.vertical, 7)
     }

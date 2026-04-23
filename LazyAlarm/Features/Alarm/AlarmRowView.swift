@@ -6,9 +6,6 @@ struct AlarmRowView: View {
     /// 表示・編集するアラームのバインディング
     @Binding var alarm: AlarmItem
 
-    /// Figmaデザインのピンクアクセントカラー（#e8069d）
-    private let accentColor = Color(red: 232 / 255, green: 6 / 255, blue: 157 / 255)
-
     var body: some View {
         HStack(spacing: 0) {
             // 時刻とラベルを縦並びで表示
@@ -25,18 +22,18 @@ struct AlarmRowView: View {
 
             Spacer()
 
-            // ON/OFFトグル（Figmaのピンク色を適用）
+            // ON/OFFトグル（ピンクアクセントカラーを適用）
             Toggle("", isOn: $alarm.isEnabled)
                 .labelsHidden()
-                .tint(accentColor)
+                .tint(Color.accentPink)
         }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .padding(.horizontal, AlarmLayout.rowHorizontalPadding)
+        .padding(.vertical, AlarmLayout.rowVerticalPadding)
         // Figmaの区切り線（上端に薄い白線）
         .overlay(alignment: .top) {
             Rectangle()
-                .fill(Color(white: 0.9, opacity: 0.3))
-                .frame(height: 0.5)
+                .fill(Color(white: 0.9, opacity: AlarmLayout.dividerOpacity))
+                .frame(height: AlarmLayout.dividerHeight)
         }
     }
 
@@ -54,5 +51,5 @@ struct AlarmRowView: View {
         label: "アラーム",
         isEnabled: true
     )))
-    .background(Color(red: 1 / 255, green: 1 / 255, blue: 51 / 255))
+    .background(Color.backgroundPrimary)
 }

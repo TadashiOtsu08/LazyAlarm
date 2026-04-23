@@ -20,47 +20,36 @@ xcodebuild -project LazyAlarm.xcodeproj -scheme LazyAlarm -configuration Debug
 xcodebuild test -project LazyAlarm.xcodeproj -scheme LazyAlarm -destination 'platform=iOS Simulator,name=iPhone 16'
 ```
 
-**Run a single test:**
-```bash
-xcodebuild test -project LazyAlarm.xcodeproj -scheme LazyAlarm -destination 'platform=iOS Simulator,name=iPhone 16' -only-testing:LazyAlarmTests/LazyAlarmTests/testExample
-```
-
-**Run UI tests:**
-```bash
-xcodebuild test -project LazyAlarm.xcodeproj -scheme LazyAlarmUITests -destination 'platform=iOS Simulator,name=iPhone 16'
-```
-
-There is no linting configuration. Xcode's Swift compiler warnings serve as the primary static analysis.
-
 ## Architecture
 
-The app uses a standard SwiftUI single-scene structure:
-
-- **`LazyAlarmApp.swift`** — `@main` entry point; creates a `WindowGroup` with `ContentView` as the root
-- **`LazyAlarm/`** — all app source files and `Assets.xcassets`
-- **`LazyAlarmTests/`** — unit tests using the Swift `Testing` framework (not XCTest)
-- **`LazyAlarmUITests/`** — UI tests using `XCTest`, including launch screenshot tests
-
-Note the testing framework split: unit tests use the modern Swift `Testing` framework (`@Test`, `#expect`), while UI tests use `XCTest`.
+- LazyAlarmApp.swift — @main entry point
+- LazyAlarm/ — all app source files and Assets.xcassets
+- LazyAlarmTests/ — unit tests（Swift Testing framework）
+- LazyAlarmUITests/ — UI tests（XCTest）
 
 ## Key Configuration
 
-- Bundle ID: `Tadashi.LazyAlarm`
+- Bundle ID: Tadashi.LazyAlarm
 - Deployment target: iOS 26.1
-- Swift compiler flags: approachable concurrency, main actor isolation, member import visibility
 - Code signing: automatic (Team ID: NH32JNUKMU)
 
 ## アプリ概要
 設定時刻から実際に起きるまでの「ズレ」とスヌーズ回数を記録し、
 怠けるほどゆるいキャラクターが育っていく目覚ましアプリ。
 
-## ディレクトリ構成（これから作る）
-/LazyAlarm/Features/Alarm        # アラーム設定・スヌーズ・停止ロジック
-/LazyAlarm/Features/Character    # キャラクター状態・育成ロジック・アニメーション
-/LazyAlarm/Features/History      # 履歴・週別・月別統計グラフ
-/LazyAlarm/Shared/Components     # 再利用可能なViewパーツ
-/LazyAlarm/Shared/Models         # SwiftDataのModelクラス
-/docs/specs                      # 各機能の仕様書（実装前に必ず読む）
+## ディレクトリ構成
+/LazyAlarm/Features/Alarm/               # アラーム設定・スヌーズ・停止
+/LazyAlarm/Features/Alarm/Constants/     # アラーム画面のレイアウト定数
+/LazyAlarm/Features/Alert/               # スワイプパズル解除画面
+/LazyAlarm/Features/Alert/Constants/     # アラート画面のレイアウト定数
+/LazyAlarm/Features/Character/           # キャラクター育成・アニメーション
+/LazyAlarm/Features/Character/Constants/ # キャラクター画面のレイアウト定数
+/LazyAlarm/Features/History/             # 履歴・統計グラフ
+/LazyAlarm/Features/History/Constants/   # 履歴画面のレイアウト定数
+/LazyAlarm/Shared/Theme/                 # Color+Theme・SFSymbols
+/LazyAlarm/Shared/Components/            # 再利用可能なViewパーツ
+/LazyAlarm/Shared/Models/                # SwiftDataのModelクラス
+/docs/specs/                             # 各機能の仕様書（実装前に必ず読む）
 
 ## コーディング規約
 - ViewはSmallに分割（1ファイル100行以内を目安）
@@ -78,20 +67,19 @@ Note the testing framework split: unit tests use the modern Swift `Testing` fram
 
 ### コードスタイル
 - 複雑な書き方より、読みやすいシンプルな書き方を優先する
-- 短く書く場合は、意味がわかりにくくなる可能性を考え必ずコメントをつける
+- 短く書く場合は意味がわかりにくくなる可能性を考え必ずコメントをつける
 - クロージャのネストは最大2階層まで
 
 ### ファイル・フォルダ管理
-- フォルダ構成はこのCLAUDE.mdの「ディレクトリ構成」に従う
-- 新しいファイルを追加する前に置き場所を確認する
-- 1ファイル1責務を原則とする（1つのViewファイルに複数のViewを混在させない）
+- 新しい機能フォルダを作成するときは以下をセットで作成する：
+  ・〇〇View.swift
+  ・Constants/〇〇Layout.swift
+- 1ファイル1責務を原則とする
 - ファイル名はUpperCamelCase（例：AlarmSetupView.swift）
-- テストファイルは対象ファイル名＋Tests（例：AlarmSetupViewTests.swift）
 
 ### 定数・マジックナンバー管理
 - 数値・文字列を直接コードに書かない
 - レイアウト定数は各機能のConstants/〇〇Layout.swiftに定義する
-  例）Features/Alarm/Constants/AlarmLayout.swift
 - 詳細ルール：/docs/coding-style.md を参照
 
 ### カラー管理
@@ -109,16 +97,11 @@ Note the testing framework split: unit tests use the modern Swift `Testing` fram
 - 詳細ルール：/docs/coding-style.md を参照
 
 ## 命名規則
-- View:       〇〇View        例）AlarmActiveView
-- ViewModel:  〇〇ViewModel   例）CharacterViewModel
+- View:       〇〇View        例）AlarmSetupView
+- ViewModel:  〇〇ViewModel   例）AlarmSetupViewModel
 - Model:      〇〇Record      例）AlarmRecord（SwiftData）
+- Layout:     〇〇Layout      例）AlarmLayout
 - Enum:       〇〇Type/State  例）CharacterState
-
-## 実装の優先順位
-1. アラーム設定・スヌーズ（無制限）・完全停止
-2. ズレ・スヌーズ回数の計測と記録（SwiftData）
-3. キャラクターの育成ロジック＋アニメーション
-4. 週別・月別統計グラフ（Swift Charts）
 
 ## 新しいViewを実装するときのルール
 1. /docs/specs の該当仕様書を最初に読む
@@ -129,4 +112,5 @@ Note the testing framework split: unit tests use the modern Swift `Testing` fram
 ## 関連ドキュメント（実装前に必ず読むこと）
 - セキュリティルール：/docs/security.md
 - 役割分担：/docs/role.md
+- コーディングスタイル詳細：/docs/coding-style.md
 - 機能仕様：/docs/specs/ 配下の該当ファイル
