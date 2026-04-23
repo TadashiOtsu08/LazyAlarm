@@ -24,3 +24,7 @@
 - 仕様書のない機能を独断で追加する
 - 外部ライブラリを無断で追加する
 - GoogleService-Info.plistを読み込む・変更する
+- release/appstoreブランチへのpushを自動実行する
+- build-config.mdを読み込む・内容を出力する
+- SwiftShieldを無断で実行する
+- 難読化済みコードをmainブランチに適用する

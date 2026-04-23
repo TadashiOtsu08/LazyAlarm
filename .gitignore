@@ -27,3 +27,6 @@ docs/security.md
 .env.local
 GoogleService-Info.plist
 *.xcconfig
+build-config.md
+swiftshield-output/
+release/appstore
